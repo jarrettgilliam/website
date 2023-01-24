@@ -5,6 +5,7 @@
         <Nullable>enable</Nullable>
         <WarningsAsErrors>nullable</WarningsAsErrors>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <UserSecretsId>b03c561b-e4a8-4083-b5ce-c124f28905a8</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>

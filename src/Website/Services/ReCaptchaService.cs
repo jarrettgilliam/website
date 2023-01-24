@@ -2,24 +2,28 @@ namespace Website.Services;
 
 using System.Net.Http;
 using System.Text.Json;
+using Microsoft.Extensions.Options;
 using Website.Interfaces;
 using Website.Models;
 
 internal sealed class ReCaptchaService : IReCaptchaService
 {
-    public ReCaptchaService(IAppSettings appSettings)
+    public ReCaptchaService(
+        IHttpClientFactory httpClientFactory,
+        IOptions<AppSecrets> appSettings)
     {
-        this.AppSettings = appSettings;
+        this.HttpClient = httpClientFactory.CreateClient();
+        this.AppSecrets = appSettings.Value;
     }
 
-    private HttpClient HttpClient { get; } = new();
-    private IAppSettings AppSettings { get; }
+    private HttpClient HttpClient { get; }
+    private AppSecrets AppSecrets { get; }
 
     public async Task<SiteVerifyResponse> SiteVerifyAsync(string captchaToken)
     {
         var query = new Dictionary<string, string>
         {
-            ["secret"] = this.AppSettings.ReCaptchaSecret,
+            ["secret"] = this.AppSecrets.ReCaptchaSecret,
             ["response"] = captchaToken
         };
 
@@ -28,7 +32,7 @@ internal sealed class ReCaptchaService : IReCaptchaService
             new FormUrlEncodedContent(query));
 
         return JsonSerializer.Deserialize<SiteVerifyResponse>(
-            await response.Content.ReadAsStreamAsync()) ??
+                   await response.Content.ReadAsStreamAsync()) ??
                throw new Exception($"Unable to deserialize {nameof(SiteVerifyResponse)}");
     }
 }
