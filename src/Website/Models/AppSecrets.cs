@@ -5,11 +5,11 @@ using System.ComponentModel.DataAnnotations;
 public sealed class AppSecrets
 {
     [Required]
-    required public string ReCaptchaSecret { get; init; }
+    public string ReCaptchaSecret { get; init; } = string.Empty;
 
     [Required]
-    required public string EmailLink { get; init; }
+    public string EmailLink { get; init; } = string.Empty;
 
     [Required, Url]
-    required public string ResumeLink { get; init; }
+    public string ResumeLink { get; init; } = string.Empty;
 }
