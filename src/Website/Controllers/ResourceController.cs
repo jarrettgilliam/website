@@ -17,18 +17,18 @@ public sealed class ResourceController : Controller
     {
         this.Logger = logger;
         this.ReCaptchaService = reCaptchaService;
-        this.AppSecrets = appSettings.Value;
+        this.AppSecrets = appSettings;
     }
 
     private ILogger<ResourceController> Logger { get; }
     private IReCaptchaService ReCaptchaService { get; }
-    private AppSecrets AppSecrets { get; }
+    private IOptions<AppSecrets> AppSecrets { get; }
 
     [HttpGet]
-    public Task<IActionResult> GetEmail(string token) => this.GetResource(token, this.AppSecrets.EmailLink);
+    public Task<IActionResult> GetEmail(string token) => this.GetResource(token, this.AppSecrets.Value.EmailLink);
 
     [HttpGet]
-    public Task<IActionResult> GetResume(string token) => this.GetResource(token, this.AppSecrets.ResumeLink);
+    public Task<IActionResult> GetResume(string token) => this.GetResource(token, this.AppSecrets.Value.ResumeLink);
 
     [NonAction]
     private async Task<IActionResult> GetResource(

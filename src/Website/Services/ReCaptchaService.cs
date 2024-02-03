@@ -13,17 +13,17 @@ internal sealed class ReCaptchaService : IReCaptchaService
         IOptions<AppSecrets> appSettings)
     {
         this.HttpClient = httpClientFactory.CreateClient();
-        this.AppSecrets = appSettings.Value;
+        this.AppSecrets = appSettings;
     }
 
     private HttpClient HttpClient { get; }
-    private AppSecrets AppSecrets { get; }
+    private IOptions<AppSecrets> AppSecrets { get; }
 
     public async Task<SiteVerifyResponse> SiteVerifyAsync(string captchaToken)
     {
         var query = new Dictionary<string, string>
         {
-            ["secret"] = this.AppSecrets.ReCaptchaSecret,
+            ["secret"] = this.AppSecrets.Value.ReCaptchaSecret,
             ["response"] = captchaToken
         };
 
