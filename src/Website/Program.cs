@@ -20,24 +20,12 @@ builder.Services
 
 builder.Services.AddControllers();
 
-builder.Services.AddHsts(
-    options =>
-    {
-        options.Preload = true;
-        options.IncludeSubDomains = false;
-        options.MaxAge = TimeSpan.FromDays(365);
-    });
-
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-}
-else
-{
-    app.UseHsts();
 }
 
 app.UseDefaultFiles();
