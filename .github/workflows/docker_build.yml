@@ -6,6 +6,8 @@ on:
       - main
     paths:
       - 'src/**'
+      - 'build/docker_build.sh'
+      - '.github/workflows/docker_build.yml'
   workflow_dispatch:
 
 jobs:
@@ -26,4 +28,4 @@ jobs:
           password: ${{ secrets.DOCKER_PAT }}
 
       - name: Run docker_build.sh
-        run: ./docker_build.sh
+        run: ./build/docker_build.sh
