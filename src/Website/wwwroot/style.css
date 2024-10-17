@@ -1,5 +1,5 @@
 html {
-    background-color: #909090;
+    background-color: #505050;
     margin: auto;
     font-family: 'Roboto', sans-serif;
 }
@@ -93,7 +93,7 @@ a.button {
 }
 
 a.button:hover, a.button:focus {
-    color: #909090;
+    color: #505050;
     background-color: white;
 }
 
@@ -153,7 +153,7 @@ a.social-button {
     letter-spacing: 0.1em;
     text-decoration: none;
     outline: none;
-    color: #606060;
+    color: #151515;
     transition: color .2s;
     margin-left: 0.3em;
     margin-right: 0.3em;
