@@ -22,6 +22,7 @@ public sealed class SecurityHeadersMiddleware(RequestDelegate Next)
             "font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; " +
             "object-src 'none'; " +
             "frame-src 'self' https://www.google.com; " +
+            "frame-ancestors 'self'; " +
             "base-uri 'self'; " +
             // "require-trusted-types-for 'script'; " +
             "upgrade-insecure-requests; " +
