@@ -8,6 +8,7 @@ on:
       - 'src/**'
       - 'build/docker_build.sh'
       - '.github/workflows/docker_build.yml'
+      - 'Website.sln'
   workflow_dispatch:
 
 jobs:
