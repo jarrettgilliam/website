@@ -23,7 +23,7 @@ public sealed class SecurityHeadersMiddleware(RequestDelegate Next)
             "object-src 'none'; " +
             "frame-src 'self' https://www.google.com; " +
             "base-uri 'self'; " +
-            "require-trusted-types-for 'script'; " +
+            // "require-trusted-types-for 'script'; " +
             "upgrade-insecure-requests; " +
             $"script-src-attr 'nonce-{nonce}'";
 
