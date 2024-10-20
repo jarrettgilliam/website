@@ -1,11 +1,5 @@
 'use strict'
 
-document.addEventListener('DOMContentLoaded', function () {
-    const s = document.createElement('script');
-    s.src = "https://www.google.com/recaptcha/api.js?render=6LdQ4uIgAAAAAAXQbFEfBlACvn8lRh6txqQhcy_6";
-    document.body.appendChild(s);
-});
-
 document.getElementById("btn-getResume").addEventListener("click", getResume);
 document.getElementById("btn-getEmail").addEventListener("click", getEmail);
 

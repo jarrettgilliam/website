@@ -12,11 +12,9 @@ public sealed class SecurityHeadersMiddleware(RequestDelegate Next)
         // https://csp-evaluator.withgoogle.com/
         // https://report-uri.com/home/generate
 
-        const string nonce = "gWcA++mta0mZpLsdkEoEDw";
-
         const string csp =
             "default-src 'self'; " +
-            $"script-src 'nonce-{nonce}' 'strict-dynamic' 'self' 'unsafe-inline' https://www.google.com https://www.gstatic.com https: http:; " +
+            "script-src 'self' https://www.google.com https://www.gstatic.com; " +
             "style-src 'self' https://fonts.googleapis.com; " +
             "img-src 'self'; " +
             "font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; " +
@@ -24,9 +22,7 @@ public sealed class SecurityHeadersMiddleware(RequestDelegate Next)
             "frame-src 'self' https://www.google.com; " +
             "frame-ancestors 'self'; " +
             "base-uri 'self'; " +
-            // "require-trusted-types-for 'script'; " +
-            "upgrade-insecure-requests; " +
-            $"script-src-attr 'nonce-{nonce}'";
+            "upgrade-insecure-requests";
 
         context.Response.OnStarting(() =>
         {
