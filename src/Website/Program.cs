@@ -21,7 +21,7 @@ builder.Services
 
 builder.Services.AddControllers();
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
@@ -30,8 +30,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseMiddleware<SecurityHeadersMiddleware>();
-app.UseDefaultFiles();
-app.UseStaticFiles();
+app.UseFileServer();
 app.MapControllers();
 
 app.Run();
