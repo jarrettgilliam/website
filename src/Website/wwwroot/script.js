@@ -22,14 +22,14 @@ function getResource(baseUri, onSuccess, onError) {
 }
 
 function getEmail() {
-    getResource('api/Resource/GetEmail', r => {
+    getResource('api/resource/email', r => {
         document.location.href = r;
     });
 }
 
 function getResume() {
     const w = window.open();
-    getResource('api/Resource/GetResume',
+    getResource('api/resource/resume',
             r => { w.location = r; },
             () => { w.close(); });
 }

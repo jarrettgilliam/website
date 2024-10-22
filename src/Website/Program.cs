@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Website.Endpoints;
 using Website.Interfaces;
 using Website.Middleware;
 using Website.Models;
@@ -19,8 +20,6 @@ builder.Services
     .AddSwaggerGen()
     .AddHttpClient();
 
-builder.Services.AddControllers();
-
 WebApplication app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -31,6 +30,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseMiddleware<SecurityHeadersMiddleware>();
 app.UseFileServer();
-app.MapControllers();
+app.MapResourceEndpoints();
 
 app.Run();
