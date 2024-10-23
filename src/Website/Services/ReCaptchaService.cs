@@ -31,8 +31,9 @@ internal sealed class ReCaptchaService : IReCaptchaService
             "https://www.google.com/recaptcha/api/siteverify",
             new FormUrlEncodedContent(query));
 
-        return JsonSerializer.Deserialize<SiteVerifyResponse>(
-                   await response.Content.ReadAsStreamAsync()) ??
+        return JsonSerializer.Deserialize(
+                   await response.Content.ReadAsStreamAsync(),
+                   SiteVerifyResponseSerializerContext.Default.SiteVerifyResponse) ??
                throw new Exception($"Unable to deserialize {nameof(SiteVerifyResponse)}");
     }
 }
