@@ -1,7 +1,7 @@
 'use strict'
 
-document.getElementById("btn-getResume").addEventListener("click", getResume);
-document.getElementById("btn-getEmail").addEventListener("click", getEmail);
+document.getElementById("btn-resume").addEventListener("click", getResume);
+document.getElementById("btn-email").addEventListener("click", getEmail);
 
 function getResource(baseUri, onSuccess, onError) {
     grecaptcha.ready(function () {
