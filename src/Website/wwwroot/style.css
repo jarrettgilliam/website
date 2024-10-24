@@ -1,33 +1,45 @@
+:root {
+    --transition-time: 0.3s;
+    --color-background: #505050;
+    --color-background-light: #999999;
+    --color-font: #EAECEE;
+    --color-font-light: white;
+    --color-font-inverted: #151515;
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        --color-background: #EAECEE;
+        --color-background-light: #999999;
+        --color-font: #111111;
+        --color-font-light: #222222;
+        --color-font-inverted: #666666;
+    }
+}
+
 html {
-    background-color: #505050;
+    background-color: var(--color-background);
     margin: auto;
-    font-family: 'Roboto', sans-serif;
+    font-family: "Hind", sans-serif;
 }
 
 body {
-    vertical-align: middle;
     min-width: 100%;
 }
 
 html, body {
     font-size: 16px;
     height: 100%;
-    margin: 0px;
-    padding: 0px;
-    border: 0px;
+    margin: 0;
+    padding: 0;
+    border: 0;
     position: fixed;
-    left: 0px;
-    right: 0px;
-}
-
-@media only screen and (max-device-width: 1080px) {
-    html, body {
-        font-size: 0.95em;
-    }
+    left: 0;
+    right: 0;
 }
 
 h1, p {
-    color: white;
+    color: var(--color-font);
 }
 
 .header {
@@ -83,53 +95,44 @@ a.button {
     width: 6.5em;
     height: 2.9em;
     line-height: 2.9em;
-    border: 0.125em solid white;
-    transition: color .2s;
+    border: 0.125em solid var(--color-font);
+    transition: all var(--transition-time);
     text-transform: uppercase;
     letter-spacing: 0.1em;
     text-decoration: none;
     outline: none;
-    color: white;
+    color: var(--color-font);
 }
 
 a.button:hover, a.button:focus {
-    color: #505050;
-    background-color: white;
+    color: var(--color-background);
+    background-color: var(--color-font);
 }
 
 a.button:active {
-    color: #808080;
-    background-color: #F0F0F0;
-    border: 0.125em solid #F0F0F0;
+    color: var(--color-background-light);
+    background-color: var(--color-font-light);
+    border: 0.125em solid var(--color-font-light);
 }
 
 a.text-link {
-    color: white;
+    color: var(--color-font);
     font-weight: 300;
     line-height: 1.4em;
-    text-decoration: none;
-    border-bottom: 0.0625em solid #cccccc;
-    padding-bottom: 2px;
+    text-underline-offset: 0.3em;
+    text-decoration-color: var(--color-background-light);
 }
 
 a.text-link:link {
-    text-decoration: none;
-    transition: border-bottom 0.7s;
-}
-
-a.text-link:visted {
-    text-decoration: none;
+    transition: all var(--transition-time);
 }
 
 a.text-link:hover {
-    border-bottom: 0.0625em solid white;
-    color: white;
+    text-decoration-color: var(--color-font);
 }
 
 a.text-link:active {
-    color: white;
-    border-bottom: 0.0625em solid white;
-    text-decoration: none;
+    text-decoration-color: var(--color-font);
 }
 
 .social-flex {
@@ -137,8 +140,8 @@ a.text-link:active {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    left: 0px;
-    right: 0px;
+    left: 0;
+    right: 0;
     clear: both;
     position: relative;
     z-index: 10;
@@ -153,14 +156,14 @@ a.social-button {
     letter-spacing: 0.1em;
     text-decoration: none;
     outline: none;
-    color: #151515;
-    transition: color .2s;
+    color: var(--color-font-inverted);
+    transition: all var(--transition-time);
     margin-left: 0.3em;
     margin-right: 0.3em;
 }
 
 a.social-button:hover, a.social-button:focus {
-    color: white;
+    color: var(--color-font);
 }
 
 footer {
