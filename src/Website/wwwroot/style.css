@@ -7,16 +7,6 @@
     --color-font-inverted: #151515;
 }
 
-@media (prefers-color-scheme: light) {
-    :root {
-        --color-background: #EAECEE;
-        --color-background-light: #999999;
-        --color-font: #111111;
-        --color-font-light: #222222;
-        --color-font-inverted: #666666;
-    }
-}
-
 html {
     background-color: var(--color-background);
     margin: auto;
