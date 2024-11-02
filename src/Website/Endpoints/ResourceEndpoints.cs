@@ -19,25 +19,25 @@ public static class ResourceEndpoints
         group.MapGet("/resume", GetResume).WithSummary("Get resume link");
     }
 
-    private static Task<Results<ContentHttpResult, ForbidHttpResult>> GetEmail(
+    private static Task<Results<ContentHttpResult, UnauthorizedHttpResult>> GetEmail(
         [FromServices] IOptions<AppSecrets> appSecrets,
         [FromServices] IReCaptchaService reCaptchaService,
         [FromQuery] string token) =>
         GetResource(reCaptchaService, token, appSecrets.Value.EmailLink);
 
-    private static Task<Results<ContentHttpResult, ForbidHttpResult>> GetResume(
+    private static Task<Results<ContentHttpResult, UnauthorizedHttpResult>> GetResume(
         [FromServices] IOptions<AppSecrets> appSecrets,
         [FromServices] IReCaptchaService reCaptchaService,
         [FromQuery] string token) =>
         GetResource(reCaptchaService, token, appSecrets.Value.ResumeLink);
 
-    private static async Task<Results<ContentHttpResult, ForbidHttpResult>> GetResource(
+    private static async Task<Results<ContentHttpResult, UnauthorizedHttpResult>> GetResource(
         IReCaptchaService reCaptchaService, string captchaToken, string resourceLink)
     {
         SiteVerifyResponse response = await reCaptchaService.SiteVerifyAsync(captchaToken);
 
         return response is { Success: true, Score: >= 0.5 }
             ? TypedResults.Content(resourceLink)
-            : TypedResults.Forbid();
+            : TypedResults.Unauthorized();
     }
 }
