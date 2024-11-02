@@ -1,8 +1,5 @@
 'use strict'
 
-document.getElementById("btn-resume").addEventListener("click", getResume);
-document.getElementById("btn-email").addEventListener("click", getEmail);
-
 function getResource(baseUri, onSuccess, onError) {
     grecaptcha.ready(function () {
         grecaptcha.execute('6LdQ4uIgAAAAAAXQbFEfBlACvn8lRh6txqQhcy_6', {action: 'submit'}).then(async function (token) {
@@ -33,3 +30,6 @@ function getResume() {
             r => { w.location = r; },
             () => { w.close(); });
 }
+
+document.getElementById("btn-resume").addEventListener("click", getResume);
+document.getElementById("btn-email").addEventListener("click", getEmail);

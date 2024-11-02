@@ -18,7 +18,8 @@ builder.Services
     .AddSingleton<IReCaptchaService, ReCaptchaService>()
     .AddEndpointsApiExplorer()
     .AddSwaggerGen()
-    .AddHttpClient();
+    .AddHttpClient()
+    .AddResponseCompression();
 
 WebApplication app = builder.Build();
 
@@ -28,6 +29,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseResponseCompression();
 app.UseMiddleware<SecurityHeadersMiddleware>();
 app.UseFileServer();
 app.MapResourceEndpoints();
