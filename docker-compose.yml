@@ -1,0 +1,14 @@
+services:
+  website:
+    image: jarrettgilliam/website:dev
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: website
+    restart: unless-stopped
+    environment:
+      - AppSecrets__ReCaptchaSecret=${AppSecrets__ReCaptchaSecret}
+      - AppSecrets__EmailLink=${AppSecrets__EmailLink}
+      - AppSecrets__ResumeLink=${AppSecrets__ResumeLink}
+    ports:
+      - "127.0.0.1:8080:8080"
