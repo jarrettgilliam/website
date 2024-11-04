@@ -1,65 +1,90 @@
 # Website
 
-This repository contains the source code for my website hosted at https://www.jarrettgilliam.com.
+This repository contains the source for my [website](https://www.jarrettgilliam.com).
 
 ## Getting Started
 
 ### Prerequisites
 
 - [.NET 8.0 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
+- [bun](https://bun.sh/)
 - [Docker](https://www.docker.com/get-started)
 
 ### Building and Running Locally
 
-1. Clone the repository:
+Clone the repo first:
+
+```sh
+git clone https://github.com/jarrettgilliam/website
+cd website
+```
+
+#### Back-end
+
+1. cd into the api folder:
+
     ```sh
-    git clone https://github.com/jarrettgilliam/website
-    cd website
+    cd src/api/Website
     ```
 
 2. Restore the dependencies:
+
     ```sh
-    dotnet restore src/Website/Website.csproj
+    dotnet restore
     ```
+
 3. Set the required app secrets:
     ```sh
-    dotnet user-secrets init --project src/Website/Website.csproj
-    dotnet user-secrets set "AppSecrets:ReCaptchaSecret" "SECRET" --project src/Website/Website.csproj
-    dotnet user-secrets set "AppSecrets:EmailLink" "mailto:youremail@example.com" --project src/Website/Website.csproj
-    dotnet user-secrets set "AppSecrets:ResumeLink" "https://www.example.com/resume.pdf" --project src/Website/Website.csproj
+    dotnet user-secrets init
+    dotnet user-secrets set "AppSecrets:ReCaptchaSecret" "SECRET"
+    dotnet user-secrets set "AppSecrets:EmailLink" "mailto:youremail@example.com"
+    dotnet user-secrets set "AppSecrets:ResumeLink" "https://www.example.com/resume.pdf"
     ```
 
 4. Build the project:
     ```sh
-    dotnet build src/Website/Website.csproj
+    dotnet build
     ```
 
 5. Run the project:
     ```sh
-    dotnet run --project src/Website/Website.csproj
+    dotnet run
+    ```
+
+#### Front-end
+
+1. cd into the web folder:
+
+    ```sh
+    cd src/web
+    ```
+
+2. Restore the dependencies:
+
+    ```sh
+    bun install
+    ```
+
+3. Run the project:
+
+    ```sh
+    bun run dev
     ```
 
 ### Building and Running with Docker
 
-1. Build the Docker image:
+1. Set the required app secrets as environment variables:
+
     ```sh
-    docker buildx build --platform linux/amd64,linux/arm64 -t jarrettgilliam/website "./src/Website"
+    export AppSecrets__ReCaptchaSecret='SECRET'
+    export AppSecrets__EmailLink='mailto:youremail@example.com'
+    export AppSecrets__ResumeLink='https://www.example.com/resume.pdf'
     ```
 
-2. Adjust and run this Docker compose file:
-    ```yaml
-    version: '3.9'
-    services:
-      website:
-        image: jarrettgilliam/website
-        container_name: website
-        restart: unless-stopped
-        environment:
-          - AppSecrets__ReCaptchaSecret=SECRET
-          - AppSecrets__EmailLink=mailto:youremail@example.com
-          - AppSecrets__ResumeLink=https://www.example.com/resume.pdf
-        ports:
-          - "8080:8080"
+2. Run the included `docker-compose.yml` file:
+
+    ```sh
+    docker compose up -d
     ```
 
 ## License
