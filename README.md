@@ -1,6 +1,6 @@
 # Website
 
-This repository contains the source code for my [website](https://www.jarrettgilliam.com).
+This repository contains the source for my [website](https://www.jarrettgilliam.com).
 
 ## Getting Started
 
