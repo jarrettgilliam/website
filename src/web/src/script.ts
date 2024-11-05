@@ -1,39 +1,44 @@
-function getResource(
-    baseUri: string,
-    onSuccess: (r: string) => void,
-    onError?: () => void)
-    : void {
-    grecaptcha.ready(function () {
-        grecaptcha.execute('6LdQ4uIgAAAAAAXQbFEfBlACvn8lRh6txqQhcy_6', {action: 'submit'}).then(async function (token: string) {
-            const response = await fetch(`${baseUri}?token=${token}`);
+function throwIfNull<T>(value: T | null): T {
+    if (value === null) {
+        throw new Error(`Value of type ${typeof value} is null`);
+    }
 
-            if (response.ok) {
-                const resourceLink = await response.text();
-                onSuccess(resourceLink);
-            } else {
-                if (onError) {
-                    onError();
-                }
-                alert("HTTP-Error: " + response.status);
-            }
-        });
-    });
+    return value;
 }
 
-function getEmail() {
-    getResource('api/resource/email', (r: string) => {
-        document.location.href = r;
-    });
+function grecaptchaReady(): Promise<void> {
+    return new Promise(resolve => grecaptcha.ready(() => resolve()));
 }
 
-function getResume() {
-    const w = window.open();
-    if (!w) return;
+async function getResource(endpoint: string) : Promise<Response> {
+    await grecaptchaReady();
+    const token = await grecaptcha.execute('6LdQ4uIgAAAAAAXQbFEfBlACvn8lRh6txqQhcy_6', { action: 'submit' });
+    const response = await fetch(`${endpoint}?token=${token}`);
 
-    getResource('api/resource/resume',
-        (r: string) => { w.location = r; },
-            () => { w.close(); });
+    if (!response.ok) {
+        setTimeout(() => alert("HTTP-Error: " + response.status), 1);
+    }
+
+    return response;
 }
 
-document.getElementById("btn-resume")?.addEventListener("click", getResume);
-document.getElementById("btn-email")?.addEventListener("click", getEmail);
+async function getEmail() {
+    const r = await getResource('api/resource/email');
+    if (r.ok) {
+        document.location.href = await r.text();
+    }
+}
+
+async function getResume() {
+    const w = throwIfNull(window.open());
+    const r = await getResource('api/resource/resume');
+
+    if (r.ok) {
+        w.location = await r.text();
+    } else {
+        w.close();
+    }
+}
+
+throwIfNull(document.getElementById("btn-resume")).addEventListener("click", getResume);
+throwIfNull(document.getElementById("btn-email")).addEventListener("click", getEmail);
