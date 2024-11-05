@@ -5,10 +5,9 @@ on:
     branches:
       - main
     paths:
+      - 'build/**'
       - 'src/**'
-      - 'build/docker_build.sh'
-      - '.github/workflows/docker_build.yml'
-      - 'Website.sln'
+      - 'Dockerfile'
   workflow_dispatch:
 
 jobs:

@@ -87,6 +87,8 @@ cd website
     docker compose up -d
     ```
 
+3. Open your browser and navigate to http://localhost:8080.
+
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
