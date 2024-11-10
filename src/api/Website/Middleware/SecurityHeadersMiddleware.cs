@@ -22,6 +22,7 @@ public sealed class SecurityHeadersMiddleware(RequestDelegate Next)
             "frame-src 'self' https://www.google.com; " +
             "frame-ancestors 'self'; " +
             "base-uri 'self'; " +
+            "connect-src 'self' https://plausible.io/; " +
             "upgrade-insecure-requests";
 
         context.Response.OnStarting(() =>
