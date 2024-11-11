@@ -14,7 +14,7 @@ public sealed class SecurityHeadersMiddleware(RequestDelegate Next)
 
         const string csp =
             "default-src 'self'; " +
-            "script-src 'self' https://www.google.com https://www.gstatic.com https://plausible.io; " +
+            "script-src 'self' https://www.google.com https://www.gstatic.com https://plausible.jarrettgilliam.com; " +
             "style-src 'self' https://fonts.googleapis.com; " +
             "img-src 'self'; " +
             "font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; " +
@@ -22,7 +22,7 @@ public sealed class SecurityHeadersMiddleware(RequestDelegate Next)
             "frame-src 'self' https://www.google.com; " +
             "frame-ancestors 'self'; " +
             "base-uri 'self'; " +
-            "connect-src 'self' https://plausible.io/; " +
+            "connect-src 'self' https://plausible.jarrettgilliam.com/; " +
             "upgrade-insecure-requests";
 
         context.Response.OnStarting(() =>
