@@ -30,6 +30,7 @@ html, body {
 
 h1, p {
     color: var(--color-font);
+    line-height: 1.6em;
 }
 
 .header {

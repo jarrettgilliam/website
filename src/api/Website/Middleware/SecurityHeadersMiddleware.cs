@@ -15,9 +15,9 @@ public sealed class SecurityHeadersMiddleware(RequestDelegate Next)
         const string csp =
             "default-src 'self'; " +
             "script-src 'self' https://www.google.com https://www.gstatic.com https://plausible.jarrettgilliam.com; " +
-            "style-src 'self' https://fonts.googleapis.com; " +
+            "style-src 'self'; " +
             "img-src 'self'; " +
-            "font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; " +
+            "font-src 'self'; " +
             "object-src 'none'; " +
             "frame-src 'self' https://www.google.com; " +
             "frame-ancestors 'self'; " +
