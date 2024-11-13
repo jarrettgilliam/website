@@ -10,7 +10,6 @@ public sealed class SecurityHeadersMiddleware(RequestDelegate Next)
         // https://securityheaders.com/
         // https://observatory.mozilla.org/
         // https://csp-evaluator.withgoogle.com/
-        // https://report-uri.com/home/generate
 
         const string csp =
             "default-src 'self'; " +
