@@ -38,9 +38,10 @@ app.UseFileServer(new FileServerOptions
     {
         OnPrepareResponse = ctx =>
         {
-            ctx.Context.Response.Headers.CacheControl = ctx.File.Name == "index.html"
-                ? "public, max-age: 3600" // Cache index.html for 1 hour
-                : "public, max-age: 31536000, immutable"; // Cache static files for 1 year
+            ctx.Context.Response.Headers.CacheControl =
+                ctx.File.Name is "index.html" or "robots.txt" or "favicon.ico"
+                ? "public, max-age: 3600" // Cannot use cache busting for these files, so cache for 1 hour
+                : "public, max-age: 31536000, immutable"; // Cache all other files for 1 year
         }
     }
 });
