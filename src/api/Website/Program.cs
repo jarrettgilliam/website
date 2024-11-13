@@ -40,7 +40,7 @@ app.UseFileServer(new FileServerOptions
         {
             ctx.Context.Response.Headers.CacheControl = ctx.File.Name == "index.html"
                 ? "public, max-age: 3600" // Cache index.html for 1 hour
-                : "public, max-age: 31536000"; // Cache static files for 1 year
+                : "public, max-age: 31536000, immutable"; // Cache static files for 1 year
         }
     }
 });
