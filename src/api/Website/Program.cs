@@ -31,7 +31,22 @@ if (app.Environment.IsDevelopment())
 
 app.UseResponseCompression();
 app.UseMiddleware<SecurityHeadersMiddleware>();
-app.UseFileServer();
+
+app.UseFileServer(new FileServerOptions
+{
+    StaticFileOptions =
+    {
+        OnPrepareResponse = ctx =>
+        {
+            if (ctx.File.Name != "index.html")
+            {
+                // Cache static files for 1 year
+                ctx.Context.Response.Headers.CacheControl = "public, max-age: 31536000";
+            }
+        }
+    }
+});
+
 app.MapResourceEndpoints();
 
 app.Run();
