@@ -40,8 +40,8 @@ app.UseFileServer(new FileServerOptions
         {
             ctx.Context.Response.Headers.CacheControl =
                 ctx.File.Name is "index.html" or "robots.txt" or "favicon.ico"
-                ? "public, max-age: 3600" // Cannot use cache busting for these files, so cache for 1 hour
-                : "public, max-age: 31536000, immutable"; // Cache all other files for 1 year
+                    ? "public, max-age: 3600" // Cannot use cache busting for these files, so cache for 1 hour
+                    : "public, max-age: 31536000, immutable"; // Cache all other files for 1 year
         }
     }
 });

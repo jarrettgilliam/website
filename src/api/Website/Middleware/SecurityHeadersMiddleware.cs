@@ -12,7 +12,7 @@ public sealed class SecurityHeadersMiddleware(RequestDelegate Next)
         // https://csp-evaluator.withgoogle.com/
 
         const string csp =
-            "default-src 'self'; " +
+            "default-src 'none'; " +
             "script-src 'self' https://www.google.com https://www.gstatic.com https://plausible.jarrettgilliam.com; " +
             "style-src 'self'; " +
             "img-src 'self'; " +
@@ -22,6 +22,7 @@ public sealed class SecurityHeadersMiddleware(RequestDelegate Next)
             "frame-ancestors 'self'; " +
             "base-uri 'self'; " +
             "connect-src 'self' https://plausible.jarrettgilliam.com/; " +
+            "form-action 'none'; " +
             "upgrade-insecure-requests";
 
         context.Response.OnStarting(() =>
