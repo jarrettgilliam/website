@@ -8,7 +8,7 @@ RUN dotnet publish "Website.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:U
 
 FROM oven/bun AS build-web
 WORKDIR /app
-COPY src/web/package.json src/web/bun.lockb ./
+COPY src/web/package.json src/web/bun.lock ./
 RUN bun install
 COPY src/web .
 RUN bun run build
