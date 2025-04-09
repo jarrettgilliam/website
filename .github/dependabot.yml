@@ -9,7 +9,7 @@ updates:
   - package-ecosystem: "bun"
     directory: "/src/web"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     open-pull-requests-limit: 10
     groups:
       all-dependencies:
