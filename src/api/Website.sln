@@ -1,6 +1,6 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Website", "Website\Website.csproj", "{38253434-AC11-432E-8768-F34C2D4A9A04}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Website", "Website\Website.csproj", "{38253434-AC11-432E-8768-F34C2D4A9A04}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

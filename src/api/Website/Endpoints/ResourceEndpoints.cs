@@ -13,7 +13,7 @@ public static class ResourceEndpoints
 {
     public static void MapResourceEndpoints(this IEndpointRouteBuilder app)
     {
-        RouteGroupBuilder group = app.MapGroup("/api/resource").WithOpenApi();
+        RouteGroupBuilder group = app.MapGroup("/api/resource");
 
         group.MapGet("/email", GetEmail).WithSummary("Get email address");
         group.MapGet("/resume", GetResume).WithSummary("Get resume link");
