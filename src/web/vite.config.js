@@ -9,11 +9,4 @@ export default defineConfig({
             },
         },
     },
-    build: {
-        terserOptions: {
-            mangle: {
-                reserved: ['grecaptcha']
-            }
-        }
-    }
-})
+});
