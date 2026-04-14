@@ -1,0 +1,2 @@
+Contact: https://github.com/jarrettgilliam/website/security/advisories/new
+Preferred-Languages: en
