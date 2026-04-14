@@ -7,6 +7,6 @@
     <UserSecretsId>b03c561b-e4a8-4083-b5ce-c124f28905a8</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.7" />
   </ItemGroup>
 </Project>
