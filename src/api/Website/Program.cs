@@ -1,8 +1,9 @@
+using System.IO;
 using System.Threading.RateLimiting;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Website.Endpoints;
 using Website.Interfaces;
@@ -27,13 +28,13 @@ builder.Services
     {
         options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
         options.AddPolicy("api", httpContext =>
-            RateLimitPartition.GetFixedWindowLimiter(
-                httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown",
-                _ => new FixedWindowRateLimiterOptions
-                {
-                    PermitLimit = 10,
-                    Window = TimeSpan.FromMinutes(1)
-                }));
+                RateLimitPartition.GetFixedWindowLimiter(
+                    httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+                    _ => new FixedWindowRateLimiterOptions
+                    {
+                        PermitLimit = 10,
+                        Window = TimeSpan.FromMinutes(1)
+                    }));
     });
 
 WebApplication app = builder.Build();
@@ -48,7 +49,7 @@ app.UseResponseCompression();
 app.UseRateLimiter();
 app.UseMiddleware<SecurityHeadersMiddleware>();
 
-app.UseFileServer(new FileServerOptions
+var fileServerOptions = new FileServerOptions
 {
     StaticFileOptions =
     {
@@ -60,7 +61,15 @@ app.UseFileServer(new FileServerOptions
                     : "public, max-age=31536000, immutable"; // Cache all other files for 1 year
         }
     }
-});
+};
+
+if (app.Environment.IsDevelopment() &&
+    new DirectoryInfo(Path.Combine(builder.Environment.ContentRootPath, "..", "..", "web", "dist")) is { Exists: true } distInfo)
+{
+    fileServerOptions.FileProvider = new PhysicalFileProvider(distInfo.FullName);
+}
+
+app.UseFileServer(fileServerOptions);
 
 app.MapResourceEndpoints();
 
