@@ -53,7 +53,7 @@ public static class ResourceEndpoints
 
         if (logger.IsEnabled(LogLevel.Warning))
         {
-            logger.LogWarning("reCAPTCHA token rejected: {Response}", response);
+            logger.LogWarning("reCAPTCHA token rejected: {Response}, configuration hostname: {Hostname}", response, hostname);
         }
 
         return TypedResults.Unauthorized();
