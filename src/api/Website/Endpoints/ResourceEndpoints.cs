@@ -27,7 +27,7 @@ public static class ResourceEndpoints
         [FromServices] IReCaptchaService reCaptchaService,
         [FromServices] ILoggerFactory loggerFactory,
         [FromQuery] string token) =>
-        GetResource(reCaptchaService, loggerFactory.CreateLogger(nameof(ResourceEndpoints)), token, appSecrets.Value.EmailLink, configuration["Hostname"] ?? "");
+        GetResource(reCaptchaService, loggerFactory.CreateLogger(nameof(ResourceEndpoints)), token, appSecrets.Value.EmailLink, configuration["ReCaptchaHostname"] ?? "");
 
     private static Task<Results<ContentHttpResult, UnauthorizedHttpResult>> GetResume(
         [FromServices] IOptions<AppSecrets> appSecrets,
@@ -35,7 +35,7 @@ public static class ResourceEndpoints
         [FromServices] IReCaptchaService reCaptchaService,
         [FromServices] ILoggerFactory loggerFactory,
         [FromQuery] string token) =>
-        GetResource(reCaptchaService, loggerFactory.CreateLogger(nameof(ResourceEndpoints)), token, appSecrets.Value.ResumeLink, configuration["Hostname"] ?? "");
+        GetResource(reCaptchaService, loggerFactory.CreateLogger(nameof(ResourceEndpoints)), token, appSecrets.Value.ResumeLink, configuration["ReCaptchaHostname"] ?? "");
 
     private static async Task<Results<ContentHttpResult, UnauthorizedHttpResult>> GetResource(
         IReCaptchaService reCaptchaService,
