@@ -2,7 +2,7 @@ namespace Website.Models;
 
 using System.Text.Json.Serialization;
 
-public sealed class SiteVerifyResponse
+public sealed record SiteVerifyResponse
 {
     /// <summary>
     /// Whether this request was a valid reCAPTCHA token for your site

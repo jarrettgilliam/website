@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Website.Interfaces;
 using Website.Models;
@@ -24,24 +25,37 @@ public static class ResourceEndpoints
         [FromServices] IOptions<AppSecrets> appSecrets,
         [FromServices] IConfiguration configuration,
         [FromServices] IReCaptchaService reCaptchaService,
+        [FromServices] ILogger logger,
         [FromQuery] string token) =>
-        GetResource(reCaptchaService, token, appSecrets.Value.EmailLink, configuration["Hostname"] ?? "");
+        GetResource(reCaptchaService, logger, token, appSecrets.Value.EmailLink, configuration["Hostname"] ?? "");
 
     private static Task<Results<ContentHttpResult, UnauthorizedHttpResult>> GetResume(
         [FromServices] IOptions<AppSecrets> appSecrets,
         [FromServices] IConfiguration configuration,
         [FromServices] IReCaptchaService reCaptchaService,
+        [FromServices] ILogger logger,
         [FromQuery] string token) =>
-        GetResource(reCaptchaService, token, appSecrets.Value.ResumeLink, configuration["Hostname"] ?? "");
+        GetResource(reCaptchaService, logger, token, appSecrets.Value.ResumeLink, configuration["Hostname"] ?? "");
 
     private static async Task<Results<ContentHttpResult, UnauthorizedHttpResult>> GetResource(
-        IReCaptchaService reCaptchaService, string captchaToken, string resourceLink, string hostname)
+        IReCaptchaService reCaptchaService,
+        ILogger logger,
+        string captchaToken,
+        string resourceLink,
+        string hostname)
     {
         SiteVerifyResponse response = await reCaptchaService.SiteVerifyAsync(captchaToken);
 
-        return response is { Success: true, Score: >= 0.5, Action: "submit" }
-            && response.Hostname == hostname
-            ? TypedResults.Content(resourceLink)
-            : TypedResults.Unauthorized();
+        if (response is { Success: true, Score: >= 0.5, Action: "submit" } && response.Hostname == hostname)
+        {
+            return TypedResults.Content(resourceLink);
+        }
+
+        if (logger.IsEnabled(LogLevel.Warning))
+        {
+            logger.LogWarning("reCAPTCHA token rejected: {Response}", response);
+        }
+
+        return TypedResults.Unauthorized();
     }
 }
