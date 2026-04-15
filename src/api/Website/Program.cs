@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Website.Endpoints;
 using Website.Interfaces;
 using Website.Middleware;
@@ -27,6 +28,16 @@ builder.Services
     .AddRateLimiter(options =>
     {
         options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+        options.OnRejected = (context, _) =>
+        {
+            var logger = context.HttpContext.RequestServices.GetRequiredService<ILogger<WebApplication>>();
+            if (logger.IsEnabled(LogLevel.Warning))
+            {
+                logger.LogWarning("Rate limit exceeded for IP: {RemoteIpAddress}",
+                    context.HttpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown");
+            }
+            return ValueTask.CompletedTask;
+        };
         options.AddPolicy("api", httpContext =>
                 RateLimitPartition.GetFixedWindowLimiter(
                     httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown",
