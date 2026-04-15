@@ -1,5 +1,6 @@
 namespace Website.Endpoints;
 
+using System.Text.Json;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -53,7 +54,8 @@ public static class ResourceEndpoints
 
         if (logger.IsEnabled(LogLevel.Warning))
         {
-            logger.LogWarning("reCAPTCHA token rejected: {Response}, configuration hostname: {Hostname}", response, hostname);
+            logger.LogWarning("reCAPTCHA token rejected: {Response}",
+                JsonSerializer.Serialize(response, SiteVerifyResponseSerializerContext.Default.SiteVerifyResponse));
         }
 
         return TypedResults.Unauthorized();
