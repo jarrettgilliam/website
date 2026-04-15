@@ -10,5 +10,7 @@ services:
       - AppSecrets__ReCaptchaSecret=${AppSecrets__ReCaptchaSecret}
       - AppSecrets__EmailLink=${AppSecrets__EmailLink}
       - AppSecrets__ResumeLink=${AppSecrets__ResumeLink}
+      - AllowedHosts=*
+      - Hostname=localhost
     ports:
       - "127.0.0.1:8080:8080"
