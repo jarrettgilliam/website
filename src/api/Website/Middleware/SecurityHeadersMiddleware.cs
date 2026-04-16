@@ -30,7 +30,9 @@ public sealed class SecurityHeadersMiddleware(RequestDelegate Next)
             context.Response.Headers.XFrameOptions = "SAMEORIGIN";
             context.Response.Headers.XContentTypeOptions = "nosniff";
             context.Response.Headers["Referrer-Policy"] = "strict-origin-when-cross-origin";
-            context.Response.Headers["Permissions-Policy"] = "camera=(), geolocation=(), microphone=()";
+            context.Response.Headers["Permissions-Policy"] =
+                "camera=(), geolocation=(), microphone=(), accelerometer=(), gyroscope=(), " +
+                "magnetometer=(), payment=(), usb=(), interest-cohort=()";
             context.Response.Headers.ContentSecurityPolicy = csp;
             return Task.CompletedTask;
         });
