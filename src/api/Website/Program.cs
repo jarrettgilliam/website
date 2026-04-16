@@ -22,6 +22,7 @@ builder.Services.AddOptions<AppSecrets>()
 
 builder.Services
     .AddSingleton<IReCaptchaService, ReCaptchaService>()
+    .AddMediator()
     .AddEndpointsApiExplorer()
     .AddSwaggerGen()
     .AddHttpClient()
@@ -32,9 +33,9 @@ builder.Services
         options.OnRejected = (context, _) =>
         {
             var logger = context.HttpContext.RequestServices.GetRequiredService<ILogger<WebApplication>>();
-            if (logger.IsEnabled(LogLevel.Warning))
+            if (logger.IsEnabled(LogLevel.Information))
             {
-                logger.LogWarning("Rate limit exceeded for IP: {RemoteIpAddress}",
+                logger.LogInformation("Rate limit exceeded for IP: {RemoteIpAddress}",
                     context.HttpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown");
             }
             return ValueTask.CompletedTask;
@@ -53,7 +54,7 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {
     options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
     // Trust only the known proxy networks
-    options.KnownNetworks.Clear();
+    options.KnownIPNetworks.Clear();
     options.KnownProxies.Clear();
 });
 
